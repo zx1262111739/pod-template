@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target '${POD_NAME}_Example' do
   pod '${POD_NAME}', :path => '../'
@@ -9,5 +9,12 @@ target '${POD_NAME}_Example' do
     inherit! :search_paths
 
     ${INCLUDED_PODS}
+  end
+end
+
+# 模拟器忽略 arm64
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
   end
 end
