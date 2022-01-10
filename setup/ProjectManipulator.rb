@@ -13,7 +13,7 @@ module Pod
       @xcodeproj_path = options.fetch(:xcodeproj_path)
       @configurator = options.fetch(:configurator)
       @platform = options.fetch(:platform)
-      @remove_demo_target = options.fetch(:remove_demo_project)
+#      @remove_demo_target = options.fetch(:remove_demo_project)
       @prefix = options.fetch(:prefix)
     end
 
@@ -29,7 +29,7 @@ module Pod
 
       @project = Xcodeproj::Project.open(@xcodeproj_path)
       add_podspec_metadata
-      remove_demo_project if @remove_demo_target
+#      remove_demo_project if @remove_demo_target
       @project.save
 
       rename_files
@@ -95,25 +95,25 @@ RUBY
       # rename xcproject
       File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.pod_name + ".xcodeproj")
 
-      unless @remove_demo_target
-        # change app file prefixes
-        ["CPDAppDelegate.h", "CPDAppDelegate.m", "CPDViewController.h", "CPDViewController.m"].each do |file|
-          before = project_folder + "/PROJECT/" + file
-          next unless File.exists? before
-
-          after = project_folder + "/PROJECT/" + file.gsub("CPD", prefix)
-          File.rename before, after
-        end
-
-        # rename project related files
-        ["PROJECT-Info.plist", "PROJECT-Prefix.pch", "PROJECT.entitlements"].each do |file|
-          before = project_folder + "/PROJECT/" + file
-          next unless File.exists? before
-
-          after = project_folder + "/PROJECT/" + file.gsub("PROJECT", @configurator.pod_name)
-          File.rename before, after
-        end
-      end
+#      unless @remove_demo_target
+#        # change app file prefixes
+#        ["CPDAppDelegate.h", "CPDAppDelegate.m", "CPDViewController.h", "CPDViewController.m"].each do |file|
+#          before = project_folder + "/PROJECT/" + file
+#          next unless File.exists? before
+#
+#          after = project_folder + "/PROJECT/" + file.gsub("CPD", prefix)
+#          File.rename before, after
+#        end
+#
+#        # rename project related files
+#        ["PROJECT-Info.plist", "PROJECT-Prefix.pch", "PROJECT.entitlements"].each do |file|
+#          before = project_folder + "/PROJECT/" + file
+#          next unless File.exists? before
+#
+#          after = project_folder + "/PROJECT/" + file.gsub("PROJECT", @configurator.pod_name)
+#          File.rename before, after
+#        end
+#      end
 
     end
 

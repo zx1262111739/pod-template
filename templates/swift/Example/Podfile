@@ -5,11 +5,6 @@ platform :ios, '10.0'
 target '${POD_NAME}_Example' do
   pod '${POD_NAME}', :path => '../'
 
-  target '${POD_NAME}_Tests' do
-    inherit! :search_paths
-
-    ${INCLUDED_PODS}
-  end
 end
 
 # 模拟器忽略 arm64
